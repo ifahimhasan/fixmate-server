@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { HttpError } from "./utils/http";
+import servicesRouter from "./routes/services";
 
 const app = express();
 
@@ -23,6 +24,9 @@ app.use(
 app.get("/", (_req, res) => {
   res.json({ name: "FixMate API", status: "ok" });
 });
+
+app.use(express.json({ limit: "10mb" }));
+app.use("/api/services", servicesRouter);
 
 // 404 for unknown API routes
 app.use((_req, res) => {
