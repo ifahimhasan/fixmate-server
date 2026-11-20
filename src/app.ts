@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { HttpError } from "./utils/http";
 import servicesRouter from "./routes/services";
+import bookingsRouter from "./routes/bookings";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.get("/", (_req, res) => {
 
 app.use(express.json({ limit: "10mb" }));
 app.use("/api/services", servicesRouter);
+app.use("/api/bookings", bookingsRouter);
 
 // 404 for unknown API routes
 app.use((_req, res) => {
