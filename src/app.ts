@@ -8,6 +8,7 @@ import webhookRouter from "./routes/webhook";
 import adminRouter from "./routes/admin";
 import usersRouter from "./routes/users";
 import uploadRouter from "./routes/upload";
+import statsRouter from "./routes/stats";
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use("/api/payments", paymentsRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/upload", uploadRouter);
+app.use("/api/stats", statsRouter);
 
 // 404 for unknown API routes
 app.use((_req, res) => {
