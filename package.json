@@ -2,12 +2,12 @@
   "name": "fixmate-server",
   "version": "1.0.0",
   "description": "FixMate API - Express + MongoDB + JWT + Stripe",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "type": "commonjs",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "typecheck": "tsc --noEmit"
   },
   "engines": {
