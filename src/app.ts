@@ -11,6 +11,8 @@ import uploadRouter from "./routes/upload";
 import statsRouter from "./routes/stats";
 
 const app = express();
+app.disable("x-powered-by");
+app.set("trust proxy", 1);
 
 const allowed = (process.env.CLIENT_URLS || "http://localhost:3000")
   .split(",")
@@ -51,6 +53,14 @@ app.use((_req, res) => {
 // Central error handler
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  // malformed JSON body → 400 instead of 500
+  if ((err as { type?: string }).type === "entity.parse.failed") {
+    return res.status(400).json({ message: "Invalid JSON body" });
+  }
+  if ((err as { type?: string }).type === "entity.too.large") {
+    return res.status(413).json({ message: "Request body is too large" });
+  }
+  if (err.message?.startsWith("Origin ")) return res.status(403).json({ message: err.message });
   const status = err instanceof HttpError ? err.status : 500;
   if (status === 500) console.error(err);
   res.status(status).json({ message: status === 500 ? "Something went wrong" : err.message });
