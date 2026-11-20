@@ -5,6 +5,7 @@ import servicesRouter from "./routes/services";
 import bookingsRouter from "./routes/bookings";
 import paymentsRouter from "./routes/payments";
 import webhookRouter from "./routes/webhook";
+import adminRouter from "./routes/admin";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(express.json({ limit: "10mb" }));
 app.use("/api/services", servicesRouter);
 app.use("/api/bookings", bookingsRouter);
 app.use("/api/payments", paymentsRouter);
+app.use("/api/admin", adminRouter);
 
 // 404 for unknown API routes
 app.use((_req, res) => {
