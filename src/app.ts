@@ -4,6 +4,7 @@ import { HttpError } from "./utils/http";
 import servicesRouter from "./routes/services";
 import bookingsRouter from "./routes/bookings";
 import paymentsRouter from "./routes/payments";
+import webhookRouter from "./routes/webhook";
 
 const app = express();
 
@@ -27,6 +28,8 @@ app.get("/", (_req, res) => {
   res.json({ name: "FixMate API", status: "ok" });
 });
 
+// Stripe webhook must read the raw body, so it goes before express.json()
+app.use("/api/payments/webhook", webhookRouter);
 app.use(express.json({ limit: "10mb" }));
 app.use("/api/services", servicesRouter);
 app.use("/api/bookings", bookingsRouter);
